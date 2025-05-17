@@ -1,0 +1,89 @@
+<div class="card shadow">
+  <div class="card-body">
+    <h3 class="card-title mb-4">{{ isEditMode() ? 'Edit Employee' : 'Add Employee' }}</h3>
+    
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="name" 
+          formControlName="name"
+          [ngClass]="{ 'is-invalid': employeeForm.controls.name.invalid && (employeeForm.controls.name.dirty || employeeForm.controls.name.touched) }"
+        >
+        @if (employeeForm.controls.name.invalid && (employeeForm.controls.name.dirty || employeeForm.controls.name.touched)) {
+          <div class="invalid-feedback">
+            Name is required
+          </div>
+        }
+      </div>
+      
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          id="email" 
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': employeeForm.controls.email.invalid && (employeeForm.controls.email.dirty || employeeForm.controls.email.touched) }"
+        >
+        @if (employeeForm.controls.email.invalid && (employeeForm.controls.email.dirty || employeeForm.controls.email.touched)) {
+          <div class="invalid-feedback">
+            @if (employeeForm.controls.email.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (employeeForm.controls.email.errors?.['email']) {
+              <span>Please enter a valid email</span>
+            }
+          </div>
+        }
+      </div>
+      
+      <div class="mb-3">
+        <label for="imageUrl" class="form-label">Image URL</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="imageUrl" 
+          formControlName="imageUrl"
+          [ngClass]="{ 'is-invalid': employeeForm.controls.imageUrl.invalid && (employeeForm.controls.imageUrl.dirty || employeeForm.controls.imageUrl.touched) }"
+        >
+        @if (employeeForm.controls.imageUrl.invalid && (employeeForm.controls.imageUrl.dirty || employeeForm.controls.imageUrl.touched)) {
+          <div class="invalid-feedback">
+            Image URL is required
+          </div>
+        }
+      </div>
+      
+      <div class="mb-3">
+        <label for="salary" class="form-label">Salary</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          id="salary" 
+          formControlName="salary"
+          min="0"
+          [ngClass]="{ 'is-invalid': employeeForm.controls.salary.invalid && (employeeForm.controls.salary.dirty || employeeForm.controls.salary.touched) }"
+        >
+        @if (employeeForm.controls.salary.invalid && (employeeForm.controls.salary.dirty || employeeForm.controls.salary.touched)) {
+          <div class="invalid-feedback">
+            @if (employeeForm.controls.salary.errors?.['required']) {
+              <span>Salary is required</span>
+            }
+            @if (employeeForm.controls.salary.errors?.['min']) {
+              <span>Salary must be a positive number</span>
+            }
+          </div>
+        }
+      </div>
+      
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">
+          {{ isEditMode() ? 'Update' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
